@@ -4,7 +4,10 @@
   "description": "For this project, you will be recreating the Juicebox API from scratch with the new technologies you've learned. You may structure your project as you wish as long as you meet the requirements. Feel free to use one of the previous workshop solutions as reference! Before you start, make sure to read through the rubric to get a sense of what you will be required to do.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed:dev": "nodemon ./db/seed.js",
+    "seed": "node ./db/seed.js",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +19,8 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.4"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1"
   }
 }
