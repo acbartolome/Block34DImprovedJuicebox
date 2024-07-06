@@ -12,3 +12,20 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// create User table
+model User {
+  id       Int    @id @default(autoincrement())
+  username String
+  password String
+  post     Post[]
+}
+
+// create Post table
+model Post {
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
+  userId  Int // defining foreign key to associate with posts
+  user    User   @relation(fields: [userId], references: [id])
+}
