@@ -3,12 +3,18 @@ const { faker } = require("@faker-js/faker");
 
 const prisma = new PrismaClient();
 
+async function resetDatabase() {
+  await prisma.$executeRaw`BEGIN`;
+  await prisma.$executeRaw`TRUNCATE TABLE "Post" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`COMMIT`;
+}
+
 async function seedData() {
   console.log("Seeding the database");
   try {
     // clear the database
-    await prisma.user.deleteMany({});
-    await prisma.post.deleteMany({});
+    await resetDatabase();
 
     // add 3 users
     const users = await Promise.all(
@@ -54,7 +60,7 @@ async function seedData() {
     );
     console.log("Database is seeded");
   } catch (error) {
-    console.error(err);
+    console.error(error);
   }
 }
 
