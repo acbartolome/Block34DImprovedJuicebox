@@ -16,7 +16,7 @@ datasource db {
 // create User table
 model User {
   id       Int    @id @default(autoincrement())
-  username String
+  username String @unique
   password String
   post     Post[]
 }
@@ -26,6 +26,6 @@ model Post {
   id      Int    @id @default(autoincrement())
   title   String
   content String
-  userId  Int // defining foreign key to associate with posts
+  userId  Int    @unique
   user    User   @relation(fields: [userId], references: [id])
 }

@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const getAllUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany({
-      incude: {
+      include: {
         post: true,
       },
     });

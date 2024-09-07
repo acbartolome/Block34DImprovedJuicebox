@@ -16,7 +16,7 @@ async function seedData() {
     // clear the database
     await resetDatabase();
 
-    // add 3 users
+    // add 3 users with 3 posts each
     const users = await Promise.all(
       [...Array(3)].map(async () => {
         return prisma.user.create({
@@ -42,21 +42,6 @@ async function seedData() {
           },
         });
       })
-    );
-
-    // add 3 poost to each instructor
-    await Promise.all(
-      users.flatMap((user, i) =>
-        [...Array(3)].map(() =>
-          prisma.post.create({
-            data: {
-              title: faker.lorem.words(),
-              content: faker.lorem.paragraphs(),
-              userId: user.id,
-            },
-          })
-        )
-      )
     );
     console.log("Database is seeded");
   } catch (error) {

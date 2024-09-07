@@ -11,23 +11,23 @@ const register = async (req, res) => {
   try {
     const existingUser = await prisma.user.findUnique({
       where: {
-        email,
+        username,
       },
     });
 
     if (existingUser) {
-      return res.status(400).json({ message: "Email already exist" });
+      return res.status(400).json({ message: "Username already exist" });
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
-
+    console.log("hashedPassword".hashPassword);
     const user = await prisma.user.create({
       data: {
         username,
         password: hashPassword,
       },
     });
-
+    console.log("user", user);
     const token = jwt.sign(
       {
         id: user.id,
@@ -38,6 +38,7 @@ const register = async (req, res) => {
         expiresIn: "60m",
       }
     );
+    console.log("token", token);
     res
       .status(201)
       .send({ user, token, message: "Account successfully created" });
@@ -55,7 +56,7 @@ const login = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email,
+        username,
       },
     });
 
